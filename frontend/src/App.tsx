@@ -26,9 +26,18 @@ function App() {
       // ensure no duplicates
       const exists = portfolioValues.find((value) => value === e.target.value);
       if (exists) return;
-
+      
+      // since react requires immutablity, to update array/object create a new one
       const updatedPortfolio = [...portfolioValues, e.target[0].value];
       setPortfolioValues(updatedPortfolio);
+    }
+
+    const onPortfolioDelete = (e: any) => {
+      e.preventDefault();
+      const removed = portfolioValues.filter((value) => {
+        return value !== e.target[0].value;
+      })
+      setPortfolioValues(removed);
     }
   
     // mouse event can cause problem, syntheticEvent is generic with type checking
@@ -47,7 +56,7 @@ function App() {
   return (
     <div className="App">
       <Search onSearchSubmit={onSearchSubmit} search={search} handleSearchChange={handleSearchChange}/>
-      <ListPortfolio portfolioValues={portfolioValues}/>
+      <ListPortfolio portfolioValues={portfolioValues} onPortfolioDelete={onPortfolioDelete}/>
       {serverError && <h1>{serverError}</h1>}
       <CardList searchResults={searchResult} onPortfolioCreate={onPortfolioCreate}/>
     </div>
