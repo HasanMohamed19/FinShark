@@ -26,7 +26,7 @@ function App() {
       e.preventDefault();
 
       // ensure no duplicates
-      const exists = portfolioValues.find((value) => value === e.target.value);
+      const exists = portfolioValues.find((value) => value === e.target[0].value);
       if (exists) return;
       
       // since react requires immutablity, to update array/object create a new one
