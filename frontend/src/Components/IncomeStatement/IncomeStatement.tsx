@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react'
-import { CompanyIncomeStatement } from '../../company';
-import { useOutletContext } from 'react-router';
-import { getIncomeStatement } from '../../api';
-import Table from '../Table/Table';
+import React, { useEffect, useState } from "react";
+import { CompanyIncomeStatement } from "../../company";
+import { useOutletContext } from "react-router";
+import { getIncomeStatement } from "../../api";
+import Table from "../Table/Table";
+import Spinner from "../Spinner/Spinner";
 
 interface Props {}
 
@@ -63,9 +64,9 @@ const configs = [
 ];
 
 const IncomeStatement = (props: Props) => {
-
   const ticker = useOutletContext<string>();
-  const [incomeStatement, setIncomeStatement] = useState<CompanyIncomeStatement[]>();
+  const [incomeStatement, setIncomeStatement] =
+    useState<CompanyIncomeStatement[]>();
 
   useEffect(() => {
     const incomeStatementFetch = async () => {
@@ -73,13 +74,19 @@ const IncomeStatement = (props: Props) => {
       setIncomeStatement(result!.data);
     };
     incomeStatementFetch();
-  }, [])
+  }, []);
 
   return (
     <>
-      {incomeStatement ? (<><Table config={configs} data={incomeStatement} /></>) : (<>Loading...</>)}
+      {incomeStatement ? (
+        <>
+          <Table config={configs} data={incomeStatement} />
+        </>
+      ) : (
+        <Spinner />
+      )}
     </>
-  )
-}
+  );
+};
 
 export default IncomeStatement;
