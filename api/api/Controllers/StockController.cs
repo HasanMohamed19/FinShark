@@ -18,13 +18,11 @@ namespace api.Controllers
         //	return View();
         //}
 
-        private readonly ApplicationDBContext _dbContext;
         private readonly IStockRepository _stockRepo;
 
-        public StockController(ApplicationDBContext context, IStockRepository stockRepo)
+        public StockController(IStockRepository stockRepo)
         {
             _stockRepo = stockRepo;
-            _dbContext = context;
         }
 
         [HttpGet]
@@ -33,7 +31,7 @@ namespace api.Controllers
             var stocks = await _stockRepo.GetAllAsync();
             var stocksDto = stocks.Select(s => s.ToStockDto());
 
-            return Ok(stocks);
+            return Ok(stocksDto);
         }
 
         [HttpGet("{id}")]
