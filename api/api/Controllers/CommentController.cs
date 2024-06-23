@@ -36,7 +36,7 @@ namespace api.Controllers
 			var comment = await _commentRepo.GetByIdAsync(id);
 			if (comment == null)
 			{
-				return null;
+				return BadRequest("Comment does not exist");
 			}
 
 			return Ok(comment.ToCommentDto());
@@ -64,6 +64,18 @@ namespace api.Controllers
 			{
 				return NotFound("Comment not found");
 			}
+			return Ok(comment.ToCommentDto());
+		}
+
+		[HttpDelete("{id}")]
+		public async Task<IActionResult> Delete([FromRoute] int id)
+		{
+			var comment = await _commentRepo.DeleteAsync(id);
+			if (comment == null)
+			{
+				return NotFound("Comment does not exist");
+			}
+
 			return Ok(comment.ToCommentDto());
 		}
 	}
