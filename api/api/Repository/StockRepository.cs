@@ -33,11 +33,13 @@ namespace api.Repository
 			{
 				if (query.SortBy.Equals("Symbol", StringComparison.OrdinalIgnoreCase))
 				{
-					stocks = query.isDecsending ? stocks.OrderByDescending(s => s.Symbol) : stocks.OrderBy(s => s.Symbol);
+					stocks = query.IsDecsending ? stocks.OrderByDescending(s => s.Symbol) : stocks.OrderBy(s => s.Symbol);
 				}
 			}
 
-			return await stocks.ToListAsync();
+			var skipNumber = (query.PageNumber - 1) * query.PageSize;
+
+			return await stocks.Skip(skipNumber).Take(query.PageSize).ToListAsync();
 		}
 
 		public async Task<Stock> CreateAsync(Stock stockModel)
