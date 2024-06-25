@@ -109,6 +109,13 @@ if (app.Environment.IsDevelopment())
 	app.UseSwagger();
 	app.UseSwaggerUI();
 }
+app.UseCors(x => x
+	.AllowAnyMethod()
+	.AllowAnyHeader()
+	.AllowCredentials()
+	// for deploying .WithOrigins("https://localhost:5203")
+	.SetIsOriginAllowed(origin => true)
+);
 
 app.UseAuthentication();
 app.UseAuthorization();
