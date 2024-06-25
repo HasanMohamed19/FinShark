@@ -9,9 +9,9 @@ import { UserProvider } from './Context/useAuth';
 function App() {
   return (
     <>
-      <Navbar />
+      {/* <Navbar />
       <Outlet />
-      <ToastContainer />
+       <ToastContainer /> */}
       <UserProvider>
         <Navbar />
         <Outlet />
